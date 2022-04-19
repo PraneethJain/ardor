@@ -1,4 +1,5 @@
 from time import sleep
+from rich.progress import track
 from qbittorrent import Client
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.webdriver import WebDriver
@@ -11,6 +12,7 @@ class Instance:
         self.edge_options = Options()
         self.edge_options.add_argument("headless")
         self.edge_options.add_argument("disable-gpu")
+        self.edge_options.add_argument("--log-level=3")
         self.service = Service("msedgedriver.exe")
         self.driver = WebDriver(service=self.service, options=self.edge_options)
         self.initialize()
@@ -24,8 +26,8 @@ class Instance:
 
     def get_all_pages(self):
         datas = {}
-        for name, link in zip(self.names, self.links):
-            datas[name] = self.generate_page_data(link)
+        for i in track(range(len(self.names)), "Getting magnet links"):
+            datas[self.names[i]] = self.generate_page_data(self.links[i])
         return datas
 
     def generate_page_data(self, link):
@@ -55,9 +57,10 @@ class Instance:
         self.driver.quit()
 
     def download_all(self):
-        for name, values in self.datas.items():
+        for name, values in track(self.datas.items(), "Initializing downloads"):
             for episode in values:
                 self.start_torrent(episode["magnet"], name)
+        print("Completed!")
 
 
 if __name__ == "__main__":
