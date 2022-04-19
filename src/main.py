@@ -76,14 +76,8 @@ class Instance:
         qb.download_from_link(magnet, savepath=f"D:\Anime\{name}")
         self.added_now.append(magnet)
 
-    def quit(self) -> None:
-        """Quits the browser instance
-        """
-        self.driver.quit()
-
     def download_all(self) -> None:
-        """Downloads from all the magnet urls which haven't already been downloaded
-        """
+        """Downloads from all the magnet urls which haven't already been downloaded"""
         for name, values in track(self.datas.items(), "Initializing downloads"):
             for episode in values:
                 if episode["magnet"] not in self.already_added:
@@ -119,6 +113,10 @@ class Instance:
             .replace("%28", "")
             .replace("%29", "")
         )
+
+    def quit(self) -> None:
+        """Quits the browser instance"""
+        self.driver.quit()
 
 
 if __name__ == "__main__":
