@@ -1,4 +1,0 @@
-from qbittorrent import Client
-
-
-    

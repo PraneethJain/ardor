@@ -1,4 +1,3 @@
-from rich import print
 from time import sleep
 from qbittorrent import Client
 from selenium.webdriver.common.by import By
@@ -17,18 +16,16 @@ class Instance:
         self.initialize()
         self.datas = self.get_all_pages()
 
-
     def initialize(self):
         with open("links.txt") as f:
             links = f.readlines()
         self.links = [ele.strip() for ele in links]
         self.names = [link[29:-2].replace("-", " ").capitalize() for link in links]
 
-
     def get_all_pages(self):
         datas = {}
-        for name, link in zip(self.names,self.links):
-            datas[name]=(self.generate_page_data(link))
+        for name, link in zip(self.names, self.links):
+            datas[name] = self.generate_page_data(link)
         return datas
 
     def generate_page_data(self, link):
@@ -56,11 +53,11 @@ class Instance:
 
     def quit(self):
         self.driver.quit()
-        
+
     def download_all(self):
         for name, values in self.datas.items():
             for episode in values:
-                self.start_torrent(episode['magnet'], name)
+                self.start_torrent(episode["magnet"], name)
 
 
 if __name__ == "__main__":
