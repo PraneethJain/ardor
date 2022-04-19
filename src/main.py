@@ -16,16 +16,13 @@ class Instance:
         self.edge_options.add_experimental_option("excludeSwitches", ["enable-logging"])
         self.service = Service("msedgedriver.exe")
         self.driver = WebDriver(service=self.service, options=self.edge_options)
-        self.initialize()
-        self.datas = self.get_all_pages()
-        self.added_now = []
-
-    def initialize(self):
         with open("links.txt") as f:
             self.links = [ele.strip() for ele in f.readlines()]
         with open("magnets_added.txt") as f:
             self.already_added = [ele.strip() for ele in f.readlines()]
         self.names = [link[29:-2].replace("-", " ").capitalize() for link in self.links]
+        self.datas = self.get_all_pages()
+        self.added_now = []
 
     def get_all_pages(self):
         datas = {}
@@ -67,10 +64,13 @@ class Instance:
         with open("magnets_added.txt", "a") as f:
             for m in self.added_now:
                 f.write(f"{m}\n")
-                
-        for magnet in self.added_now:
-            print(f"Added: {self.magnet_to_name(magnet)}")
+        if self.added_now:
+            for magnet in self.added_now:
+                print(f"Added: {self.magnet_to_name(magnet)}")
+        else:
+            print(f"No new episodes available!")
         print("Completed!")
+
     @staticmethod
     def magnet_to_name(magnet: str):
         return (
