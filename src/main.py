@@ -8,7 +8,11 @@ from selenium.webdriver.edge.service import Service
 
 
 class Instance:
-    def __init__(self):
+    def __init__(self) -> None:
+        """Initialize the browser instance
+        Reads the links from the links.txt file
+        Finds all the 1080p magnet links on those links
+        """
         self.edge_options = Options()
         self.edge_options.add_argument("headless")
         self.edge_options.add_argument("disable-gpu")
@@ -24,13 +28,26 @@ class Instance:
         self.datas = self.get_all_pages()
         self.added_now = []
 
-    def get_all_pages(self):
+    def get_all_pages(self) -> dict:
+        """Finds magnet links and names from all the links
+
+        Returns:
+            dict: dictionary with having keys as name of the series values containing episode numbers and their magnet links
+        """
         datas = {}
         for i in track(range(len(self.names)), "Getting magnet links"):
             datas[self.names[i]] = self.generate_page_data(self.links[i])
         return datas
 
-    def generate_page_data(self, link):
+    def generate_page_data(self, link: str) -> list:
+        """Finds magnet links and names from the given link
+
+        Args:
+            link (str): url of website
+
+        Returns:
+            list: list consisting of dictionaries having keys "episode" and "magnet" which contain episode number and magnet link of that episode number respectively
+        """
         data = []
         self.driver.get(link)
         sleep(1)
@@ -48,15 +65,25 @@ class Instance:
         return data
 
     def start_torrent(self, magnet: str, name: str) -> None:
+        """Starts downloading the given magnet, directory is created using name
+
+        Args:
+            magnet (str): magnet link of the torrent
+            name (str): used to create the directory to save the files to
+        """
         qb = Client("http://127.0.0.1:8080/")
         qb.login("admin", "adminadmin")
         qb.download_from_link(magnet, savepath=f"D:\Anime\{name}")
         self.added_now.append(magnet)
 
-    def quit(self):
+    def quit(self) -> None:
+        """Quits the browser instance
+        """
         self.driver.quit()
 
-    def download_all(self):
+    def download_all(self) -> None:
+        """Downloads from all the magnet urls which haven't already been downloaded
+        """
         for name, values in track(self.datas.items(), "Initializing downloads"):
             for episode in values:
                 if episode["magnet"] not in self.already_added:
@@ -72,7 +99,15 @@ class Instance:
         print("Completed!")
 
     @staticmethod
-    def magnet_to_name(magnet: str):
+    def magnet_to_name(magnet: str) -> str:
+        """Converts the magnet url into readable name
+
+        Args:
+            magnet (str): the magnet url to convert
+
+        Returns:
+            str: the converted final string
+        """
         return (
             magnet[
                 magnet.find("SubsPlease")
