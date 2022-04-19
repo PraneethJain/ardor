@@ -13,6 +13,7 @@ class Instance:
         self.edge_options.add_argument("headless")
         self.edge_options.add_argument("disable-gpu")
         self.edge_options.add_argument("--log-level=3")
+        self.edge_options.add_experimental_option('excludeSwitches', ['enable-logging'])
         self.service = Service("msedgedriver.exe")
         self.driver = WebDriver(service=self.service, options=self.edge_options)
         self.initialize()
