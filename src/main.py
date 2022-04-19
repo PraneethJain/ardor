@@ -55,7 +55,6 @@ class Instance:
         qb.login("admin", "adminadmin")
         qb.download_from_link(magnet, savepath=f"D:\Anime\{name}")
         self.added_now.append(magnet)
-        
 
     def quit(self):
         self.driver.quit()
@@ -68,7 +67,23 @@ class Instance:
         with open("magnets_added.txt", "a") as f:
             for m in self.added_now:
                 f.write(f"{m}\n")
+                
+        for magnet in self.added_now:
+            print(f"Added: {self.magnet_to_name(magnet)}")
         print("Completed!")
+    @staticmethod
+    def magnet_to_name(magnet: str):
+        return (
+            magnet[
+                magnet.find("SubsPlease")
+                + len("SubsPlease")
+                + 6 : magnet.find("0p")
+                + 2
+            ]
+            .replace("%20", " ")
+            .replace("%28", "")
+            .replace("%29", "")
+        )
 
 
 if __name__ == "__main__":
