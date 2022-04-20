@@ -36,7 +36,7 @@ class Instance:
             dict: dictionary with having keys as name of the series values containing episode numbers and their magnet links
         """
         datas = {}
-        for i in track(range(len(self.names)), "[blue]Getting [bold]magnet[/bold] links[/blue]  "):
+        for i in track(range(len(self.names)), "[purple]Getting [italic]magnet[/italic] links[/purple]  "):
             datas[self.names[i]] = self.generate_page_data(self.links[i])
         return datas
 
@@ -79,7 +79,7 @@ class Instance:
 
     def download_all(self) -> None:
         """Downloads from all the magnet urls which haven't already been downloaded"""
-        for name, values in track(self.datas.items(), "[blue]Initializing [bold]downloads[/bold][/blue]"):
+        for name, values in track(self.datas.items(), "[purple]Initializing [italic]downloads[/italic][/purple]"):
             for episode in values:
                 if episode["magnet"] not in self.already_added:
                     self.start_torrent(episode["magnet"], name)
@@ -91,7 +91,7 @@ class Instance:
                 print(f"[green]Added: [italic]{self.magnet_to_name(magnet)}[/italic][/green]")
         else:
             print(f"[green]No new episodes available![/green]")
-        print("[red]Completed![/red]")
+        print("[red][bold]Completed![/bold][/red]")
 
     @staticmethod
     def magnet_to_name(magnet: str) -> str:
