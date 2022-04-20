@@ -40,7 +40,7 @@ class Instance:
         return datas
 
     def generate_page_data(self, link: str) -> list:
-        """Finds magnet links and names from the given link
+        """Finds magnet links and episode numbers from the given link
 
         Args:
             link (str): url of website
