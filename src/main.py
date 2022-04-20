@@ -24,7 +24,7 @@ class Instance:
             self.links = [ele.strip() for ele in f.readlines()]
         with open("magnets_added.txt") as f:
             self.already_added = [ele.strip() for ele in f.readlines()]
-        self.names = [link[29:-2].replace("-", " ").capitalize() for link in self.links]
+        self.names = [link[29:-1].replace("-", " ").capitalize() for link in self.links]
         self.datas = self.get_all_pages()
         self.added_now = []
 
