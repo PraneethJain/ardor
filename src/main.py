@@ -1,4 +1,5 @@
 from time import sleep
+from rich import print
 from rich.progress import track
 from qbittorrent import Client
 from selenium.webdriver.common.by import By
@@ -35,7 +36,7 @@ class Instance:
             dict: dictionary with having keys as name of the series values containing episode numbers and their magnet links
         """
         datas = {}
-        for i in track(range(len(self.names)), "Getting magnet links"):
+        for i in track(range(len(self.names)), "[blue]Getting [bold]magnet[/bold] links[/blue]  "):
             datas[self.names[i]] = self.generate_page_data(self.links[i])
         return datas
 
@@ -78,7 +79,7 @@ class Instance:
 
     def download_all(self) -> None:
         """Downloads from all the magnet urls which haven't already been downloaded"""
-        for name, values in track(self.datas.items(), "Initializing downloads"):
+        for name, values in track(self.datas.items(), "[blue]Initializing [bold]downloads[/bold][/blue]"):
             for episode in values:
                 if episode["magnet"] not in self.already_added:
                     self.start_torrent(episode["magnet"], name)
@@ -87,10 +88,10 @@ class Instance:
                 f.write(f"{m}\n")
         if self.added_now:
             for magnet in self.added_now:
-                print(f"Added: {self.magnet_to_name(magnet)}")
+                print(f"[green]Added: [italic]{self.magnet_to_name(magnet)}[/italic][/green]")
         else:
-            print(f"No new episodes available!")
-        print("Completed!")
+            print(f"[green]No new episodes available![/green]")
+        print("[red]Completed![/red]")
 
     @staticmethod
     def magnet_to_name(magnet: str) -> str:
