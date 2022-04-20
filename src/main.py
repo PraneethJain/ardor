@@ -1,11 +1,12 @@
-from time import sleep
 from rich import print
 from rich.progress import track
 from qbittorrent import Client
 from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.webdriver import WebDriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
+from selenium.webdriver.edge.webdriver import WebDriver
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class Instance:
@@ -36,7 +37,10 @@ class Instance:
             dict: dictionary with having keys as name of the series values containing episode numbers and their magnet links
         """
         datas = {}
-        for i in track(range(len(self.names)), "[purple]Getting [italic]magnet[/italic] links[/purple]  "):
+        for i in track(
+            range(len(self.names)),
+            "[purple]Getting [italic]magnet[/italic] links[/purple]  ",
+        ):
             datas[self.names[i]] = self.generate_page_data(self.links[i])
         return datas
 
@@ -51,19 +55,25 @@ class Instance:
         """
         data = []
         self.driver.get(link)
-        sleep(1)
-        for element in self.driver.find_elements(By.CLASS_NAME, "show-release-item"):
-
-            data.append(
-                {
-                    "episode": element.text.split()[-1],
-                    "magnet": element.find_element(
-                        By.XPATH,
-                        ".//a[contains(@href, '1080p')][contains(@href, 'magnet')]",
-                    ).get_attribute("href"),
-                }
+        try:
+            WebDriverWait(self.driver, 1).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "show-release-item"))
             )
-        return data
+        finally:
+            for element in self.driver.find_elements(
+                By.CLASS_NAME, "show-release-item"
+            ):
+
+                data.append(
+                    {
+                        "episode": element.text.split()[-1],
+                        "magnet": element.find_element(
+                            By.XPATH,
+                            ".//a[contains(@href, '1080p')][contains(@href, 'magnet')]",
+                        ).get_attribute("href"),
+                    }
+                )
+            return data
 
     def start_torrent(self, magnet: str, name: str) -> None:
         """Starts downloading the given magnet, directory is created using name
@@ -79,7 +89,10 @@ class Instance:
 
     def download_all(self) -> None:
         """Downloads from all the magnet urls which haven't already been downloaded"""
-        for name, values in track(self.datas.items(), "[purple]Initializing [italic]downloads[/italic][/purple]"):
+        for name, values in track(
+            self.datas.items(),
+            "[purple]Initializing [italic]downloads[/italic][/purple]",
+        ):
             for episode in values:
                 if episode["magnet"] not in self.already_added:
                     self.start_torrent(episode["magnet"], name)
@@ -88,7 +101,9 @@ class Instance:
                 f.write(f"{m}\n")
         if self.added_now:
             for magnet in self.added_now:
-                print(f"[green]Added: [italic]{self.magnet_to_name(magnet)}[/italic][/green]")
+                print(
+                    f"[green]Added: [italic]{self.magnet_to_name(magnet)}[/italic][/green]"
+                )
         else:
             print(f"[green]No new episodes available![/green]")
         print("[red][bold]Completed![/bold][/red]")
