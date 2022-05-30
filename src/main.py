@@ -42,13 +42,20 @@ class Downloader:
     def download_all(self):
         for magnet,show in self.magnets:
             self.start_torrent(magnet, show)
+            
+    def print_newly_added(self):
+        if self.newly_added:
+            for title in self.newly_added:
+                print(f"Added: {title}")
+        else:
+            print(f"No new episodes!")
     
     def do(self):
         self.get_response()
         self.parse_response()
         self.update_downloaded()
         self.download_all()
-        print(self.newly_added)
+        self.print_newly_added()
         
     def test(self):
         print(self.episodes_downloaded)
