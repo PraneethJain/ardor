@@ -7,13 +7,28 @@ with open("downloaded_episodes.txt") as f:
 with open("shows_watching.txt") as f:
     shows_watching = set(f.read().splitlines())
 
-url = "https://subsplease.org/rss/?r=1080"
 r = requests.get("https://subsplease.org/rss/?r=1080")
 soup = BeautifulSoup(r.text, "lxml")
-print(soup.rss.channel.item.link.next_element)
+
+
 magnets = set()
-for episode in soup.find_all("item"):
-    if episode.category.text in shows_watching:
-        magnets.add(episode.link.next_element)
+newly_added = set()
+
+
+def update_episode(episode):
+    magnets.add(episode.link.next_element)
+    newly_added.add(episode.title.text)
+
+
+[
+    update_episode(episode)
+    for episode in soup.find_all("item")
+    if (episode.category.text in shows_watching)
+    and (episode.title.text not in downloaded_episodes)
+]
+
+with open("downloaded_episodes.txt", "a") as f:
+    for title in newly_added:
+        f.write(f"{title}\n")
 
 print(magnets)
