@@ -3,6 +3,7 @@ from qbittorrent import Client
 from rich.console import Console
 from rich.table import Table
 import requests
+import sys
 
 console = Console()
 
@@ -74,7 +75,7 @@ class Downloader:
         else:
             console.print(f"No new episodes!")
 
-    def do(self):
+    def update(self):
         self.get_response()
         self.parse_response()
         self.update_downloaded()
@@ -91,4 +92,4 @@ class Downloader:
 if __name__ == "__main__":
 
     downloader = Downloader()
-    downloader.do()
+    downloader.update()
