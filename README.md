@@ -1,2 +1,2 @@
 # Anime-Downloader
-An anime downloader written in python using selenium.
+An anime downloader written in python.
