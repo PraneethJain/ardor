@@ -58,7 +58,7 @@ class Downloader:
             table.add_column("Size", justify="center", style="#ffbc0a")
             for episode in self.newly_added:
                 table.add_row(
-                    episode.pubdate.text,
+                    episode.pubdate.text[:-6],
                     episode.category.text[:-7],
                     episode.title.text[
                         episode.title.text.rfind("-")
