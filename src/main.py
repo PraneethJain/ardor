@@ -7,3 +7,6 @@ if __name__ == '__main__':
     for arg in sys.argv:
         if arg=='dl':
             downloader.update()
+        if arg=='play':
+            player = Player()
+            player.play('temp')
