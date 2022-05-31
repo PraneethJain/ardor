@@ -3,7 +3,6 @@ from qbittorrent import Client
 from rich.console import Console
 from rich.table import Table
 import requests
-import sys
 
 console = Console()
 
@@ -87,9 +86,3 @@ class Downloader:
         console.print(self.shows_watching)
         console.print(self.newly_added)
         console.print(self.soup.prettify())
-
-
-if __name__ == "__main__":
-
-    downloader = Downloader()
-    downloader.update()
