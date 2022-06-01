@@ -44,8 +44,8 @@ class Manager:
                         - 1
                     ],
                 }
-                console.print(episode_dict)
                 self.newly_added.append(episode_dict)
+        self.episodes_unwatched.extend(self.newly_added)
 
     def update_downloaded(self):
         with open("downloaded_episodes.txt", "a") as f:
@@ -53,7 +53,6 @@ class Manager:
                 f.write(f"{episode['title']}\n")
                 
     def update_unwatched(self):
-        self.episodes_unwatched.extend(self.newly_added)
         with open("unwatched_episodes.json", "w") as f:
             json.dump(self.episodes_unwatched, f)
 
@@ -68,27 +67,30 @@ class Manager:
         for episode in self.newly_added:
             self.start_torrent(episode)
 
+    def create_table(self, L):
+        table = Table(title="Episodes Added")
+        table.add_column("S.No", justify="center")
+        table.add_column("Released", justify="center", style="#c200fb")
+        table.add_column("Show", justify="center", style="#ec0868")
+        table.add_column("Ep", justify="center", style="#fc2f00")
+        table.add_column("Quality", justify="center", style="#ec7d10")
+        table.add_column("Size", justify="center", style="#ffbc0a")
+        for i, episode in enumerate(L, start=1):
+            table.add_row(
+                str(i),
+                episode["date"],
+                episode["show"],
+                episode["ep"],
+                episode["title"][
+                    episode["title"].find("(") + 1 : episode["title"].rfind(")")
+                ],
+                episode["size"],
+            )
+        return table
+    
     def print_newly_added(self):
         if self.newly_added:
-            table = Table(title="Episodes Added")
-            table.add_column("S.No", justify="center")
-            table.add_column("Released", justify="center", style="#c200fb")
-            table.add_column("Show", justify="center", style="#ec0868")
-            table.add_column("Ep", justify="center", style="#fc2f00")
-            table.add_column("Quality", justify="center", style="#ec7d10")
-            table.add_column("Size", justify="center", style="#ffbc0a")
-            for i, episode in enumerate(self.newly_added, start=1):
-                table.add_row(
-                    str(i),
-                    episode["date"],
-                    episode["show"],
-                    episode["ep"],
-                    episode["title"][
-                        episode["title"].find("(") + 1 : episode["title"].rfind(")")
-                    ],
-                    episode["size"],
-                )
-            console.print(table)
+            console.print(self.create_table(self.newly_added))
         else:
             console.print(f"No new episodes!")
 
@@ -105,6 +107,17 @@ class Manager:
             "D:\Anime\Ping Pong The Animation\Episode 11 - Blood Tastes Like Iron.mkv"
         )
         os.system(f'mpv "{episode_path}"')
+        
+    def watchlist(self):
+        if self.episodes_unwatched:
+            console.print(self.create_table(self.episodes_unwatched))
+        else:
+            console.print(f"All caught up!")
+            
+    def complete(self, i):
+        console.print(f"Completed {self.episodes_unwatched[i]['show']} {self.episodes_unwatched[i]['ep']}")
+        self.episodes_unwatched.pop(i)
+        self.update_unwatched()
 
     def test(self):
         console.print(self.episodes_downloaded)
