@@ -23,31 +23,42 @@ class Manager:
         self.soup = BeautifulSoup(self.response.text, "lxml")
 
     def parse_response(self):
-        self.magnets = set()
-        self.newly_added = set()
+        self.newly_added = []
         for episode in self.soup.find_all("item"):
             if (
                 episode.category.text in self.shows_watching
                 and episode.title.text not in self.episodes_downloaded
             ):
-                self.magnets.add(
-                    (episode.link.next_element, episode.category.text[:-7])
-                )
-                self.newly_added.add(episode)
+                episode_dict = {
+                    "title": episode.title.text,
+                    "show": episode.category.text[:-7],
+                    "link": episode.link.next_element,
+                    "date": episode.pubdate.text[:-6],
+                    "size": episode.find("subsplease:size").text,
+                    "ep": episode.title.text[
+                        episode.title.text.rfind("-")
+                        + 2 : episode.title.text.find("(")
+                        - 1
+                    ],
+                }
+                console.print(episode_dict)
+                self.newly_added.append(episode_dict)
 
     def update_downloaded(self):
         with open("downloaded_episodes.txt", "a") as f:
             for episode in self.newly_added:
-                f.write(f"{episode.title.text}\n")
+                f.write(f"{episode['title']}\n")
 
-    def start_torrent(self, magnet, show):
+    def start_torrent(self, episode):
         client = Client("http://127.0.0.1:8080/")
         client.login("admin", "adminadmin")
-        client.download_from_link(magnet, savepath=f"D:\Anime\{show}")
+        client.download_from_link(
+            episode["link"], savepath=f"D:\Anime\{episode['show']}"
+        )
 
     def download_all(self):
-        for magnet, show in self.magnets:
-            self.start_torrent(magnet, show)
+        for episode in self.newly_added:
+            self.start_torrent(episode)
 
     def print_newly_added(self):
         if self.newly_added:
@@ -59,18 +70,15 @@ class Manager:
             table.add_column("Quality", justify="center", style="#ec7d10")
             table.add_column("Size", justify="center", style="#ffbc0a")
             for i, episode in enumerate(self.newly_added, start=1):
-                table.add_row(str(i),
-                    episode.pubdate.text[:-6],
-                    episode.category.text[:-7],
-                    episode.title.text[
-                        episode.title.text.rfind("-")
-                        + 2 : episode.title.text.find("(")
-                        - 1
+                table.add_row(
+                    str(i),
+                    episode["date"],
+                    episode["show"],
+                    episode["ep"],
+                    episode["title"][
+                        episode["title"].find("(") + 1 : episode["title"].rfind(")")
                     ],
-                    episode.title.text[
-                        episode.title.text.find("(") + 1 : episode.title.text.rfind(")")
-                    ],
-                    episode.find("subsplease:size").text,
+                    episode["size"],
                 )
             console.print(table)
         else:
@@ -84,10 +92,10 @@ class Manager:
         self.print_newly_added()
 
     def play(self, episode_path):
-        episode_path = 'D:\Anime\Ping Pong The Animation\Episode 11 - Blood Tastes Like Iron.mkv'
-        os.system(
-            f'mpv "{episode_path}"'
+        episode_path = (
+            "D:\Anime\Ping Pong The Animation\Episode 11 - Blood Tastes Like Iron.mkv"
         )
+        os.system(f'mpv "{episode_path}"')
 
     def test(self):
         console.print(self.episodes_downloaded)
