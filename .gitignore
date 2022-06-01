@@ -1,4 +1,5 @@
 # File data
+*.json
 *.txt
 src/test.py
 # Byte-compiled / optimized / DLL files
