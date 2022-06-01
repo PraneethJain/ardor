@@ -4,6 +4,7 @@ from rich.console import Console
 from rich.table import Table
 import requests
 import os
+import json
 
 console = Console()
 
@@ -17,6 +18,8 @@ class Manager:
             self.episodes_downloaded = set(f.read().splitlines())
         with open("shows_watching.txt") as f:
             self.shows_watching = set(f.read().splitlines())
+        with open("unwatched_episodes.json", "r") as f:
+            self.episodes_unwatched = json.load(f)
 
     def get_response(self):
         self.response = requests.get(self.url)
@@ -48,6 +51,11 @@ class Manager:
         with open("downloaded_episodes.txt", "a") as f:
             for episode in self.newly_added:
                 f.write(f"{episode['title']}\n")
+                
+    def update_unwatched(self):
+        self.episodes_unwatched.extend(self.newly_added)
+        with open("unwatched_episodes.json", "w") as f:
+            json.dump(self.episodes_unwatched, f)
 
     def start_torrent(self, episode):
         client = Client("http://127.0.0.1:8080/")
@@ -88,6 +96,7 @@ class Manager:
         self.get_response()
         self.parse_response()
         self.update_downloaded()
+        self.update_unwatched()
         self.download_all()
         self.print_newly_added()
 
