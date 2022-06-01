@@ -1,12 +1,11 @@
-from downloader import Downloader
+from manager import Manager
 from player import Player
 import sys
 
 if __name__ == '__main__':
-    downloader = Downloader()
+    manager = Manager()
     for arg in sys.argv:
         if arg=='dl':
-            downloader.update()
+            manager.update()
         if arg=='play':
-            player = Player()
-            player.play('temp')
+            pass

@@ -7,7 +7,7 @@ import requests
 console = Console()
 
 
-class Downloader:
+class Manager:
     def __init__(self):
 
         self.url = "https://subsplease.org/rss/?r=1080"
