@@ -1,5 +1,4 @@
 from manager import Manager
-from player import Player
 import sys
 
 if __name__ == '__main__':
@@ -8,4 +7,4 @@ if __name__ == '__main__':
         if arg=='dl':
             manager.update()
         if arg=='play':
-            pass
+            manager.play('test')

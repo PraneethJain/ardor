@@ -3,6 +3,7 @@ from qbittorrent import Client
 from rich.console import Console
 from rich.table import Table
 import requests
+import os
 
 console = Console()
 
@@ -80,6 +81,12 @@ class Manager:
         self.update_downloaded()
         self.download_all()
         self.print_newly_added()
+
+    def play(self, episode_path):
+        episode_path = 'D:\Anime\Ping Pong The Animation\Episode 11 - Blood Tastes Like Iron.mkv'
+        os.system(
+            f'mpv "{episode_path}"'
+        )
 
     def test(self):
         console.print(self.episodes_downloaded)
