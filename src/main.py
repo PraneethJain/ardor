@@ -8,7 +8,7 @@ if __name__ == '__main__':
             manager.update()
             break
         if arg=='play' or arg=='watch':
-            manager.play('test')
+            manager.play(int(sys.argv[i+1])-1)
             break
         if arg=='watchlist' or arg=='wl':
             manager.watchlist()
@@ -18,3 +18,4 @@ if __name__ == '__main__':
             break
         if arg=='test':
             manager.test()
+            break

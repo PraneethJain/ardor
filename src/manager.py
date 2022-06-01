@@ -102,10 +102,8 @@ class Manager:
         self.download_all()
         self.print_newly_added()
 
-    def play(self, episode_path):
-        episode_path = (
-            "D:\Anime\Ping Pong The Animation\Episode 11 - Blood Tastes Like Iron.mkv"
-        )
+    def play(self, i):
+        episode_path = f"D:\Anime\{self.episodes_unwatched[i]['show']}\{self.episodes_unwatched[i]['title']}"
         os.system(f'mpv "{episode_path}"')
         
     def watchlist(self):
