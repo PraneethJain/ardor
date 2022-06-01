@@ -52,13 +52,14 @@ class Manager:
     def print_newly_added(self):
         if self.newly_added:
             table = Table(title="Episodes Added")
+            table.add_column("S.No", justify="center")
             table.add_column("Released", justify="center", style="#c200fb")
             table.add_column("Show", justify="center", style="#ec0868")
             table.add_column("Ep", justify="center", style="#fc2f00")
             table.add_column("Quality", justify="center", style="#ec7d10")
             table.add_column("Size", justify="center", style="#ffbc0a")
-            for episode in self.newly_added:
-                table.add_row(
+            for i, episode in enumerate(self.newly_added, start=1):
+                table.add_row(str(i),
                     episode.pubdate.text[:-6],
                     episode.category.text[:-7],
                     episode.title.text[
