@@ -93,6 +93,21 @@ class Manager:
             console.print(self.create_table(self.newly_added))
         else:
             console.print(f"No new episodes!")
+            
+    def show_progress(self):
+        client = Client("http://127.0.0.1:8080/")
+        client.login("admin", "adminadmin")
+        if torrents:= client.torrents(filter='downloading', category='anime'):
+            table = Table(title='Episodes downloading')
+            table.add_column("S.No", justify="center", style="#04e762")
+            table.add_column("Torrent Title", justify="center", style="#f5b700")
+            table.add_column("Download %", justify="center", style="#dc0073")
+            table.add_column("ETA", justify="center", style="#008bf8")
+            for i,torrent in enumerate(torrents, start=1):
+                table.add_row(str(i), torrent['name'], f"{round(torrent['progress']*100, 2)}%", f"{torrent['eta']//60}m {torrent['eta']%60}s")
+            console.print(table)
+        else:
+            console.print('All downloads complete!')
 
     def update(self):
         self.get_response()

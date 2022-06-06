@@ -19,3 +19,6 @@ if __name__ == '__main__':
         if arg=='test':
             manager.test()
             break
+        if arg=='progress':
+            manager.show_progress()
+            break
