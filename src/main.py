@@ -23,7 +23,14 @@ if __name__ == "__main__":
             manager.show_progress()
             break
         if arg == "series":
-            manager.list_shows()
+            if i<len(sys.argv)-1:
+                if sys.argv[i+1]=='all':
+                    manager.list_shows()
+                elif sys.argv[i+1]=='remove':
+                    if i+1<len(sys.argv)-1:
+                        manager.remove_show(int(sys.argv[i+2])-1)
+            else:
+                manager.list_watching_shows()
             break
         if arg == "test":
             manager.test()

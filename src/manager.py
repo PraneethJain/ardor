@@ -159,6 +159,20 @@ class Manager:
         with open("shows_watching.json", "w") as f:
             json.dump(self.shows_watching, f)
             console.print(f"Added {self.all_shows[i]}")
+            
+    def list_watching_shows(self):
+        table = Table(title='Shows Watching')
+        table.add_column("S.No", justify="center", style="#ff0f7b")
+        table.add_column("Show", justify="center", style="#f89b29")
+        for i,show in enumerate(self.shows_watching, start=1):
+            table.add_row(str(i), show)
+        console.print(table)
+        
+    def remove_show(self, i):
+        removed_show = self.shows_watching.pop(i)
+        with open("shows_watching.json", "w") as f:
+            json.dump(self.shows_watching, f)
+            console.print(f"Removed {removed_show}")
 
     def test(self):
         console.print(self.episodes_downloaded)
