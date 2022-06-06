@@ -22,3 +22,6 @@ if __name__ == '__main__':
         if arg=='progress':
             manager.show_progress()
             break
+        if arg=='series':
+            manager.list_shows()
+            break
