@@ -164,9 +164,12 @@ class Manager:
         table = Table(title='Shows Watching')
         table.add_column("S.No", justify="center", style="#ff0f7b")
         table.add_column("Show", justify="center", style="#f89b29")
-        for i,show in enumerate(self.shows_watching, start=1):
-            table.add_row(str(i), show)
-        console.print(table)
+        if shows_watching:=self.shows_watching:
+            for i,show in enumerate(shows_watching, start=1):
+                table.add_row(str(i), show)
+            console.print(table)
+        else:
+            console.print("You haven't added any shows!")
         
     def remove_show(self, i):
         removed_show = self.shows_watching.pop(i)
