@@ -23,12 +23,12 @@ class Manager:
 
         self.url = "https://subsplease.org/rss/?r=1080"
 
-        with open(resource_path("downloaded_episodes.txt")) as f:
+        with open(resource_path("data/downloaded_episodes.txt")) as f:
             self.episodes_downloaded = set(f.read().splitlines())
 
-        with open(resource_path("shows_watching.json"), "r") as f:
+        with open(resource_path("data/shows_watching.json"), "r") as f:
             self.shows_watching = json.load(f)
-        with open(resource_path("unwatched_episodes.json"), "r") as f:
+        with open(resource_path("data/unwatched_episodes.json"), "r") as f:
             self.episodes_unwatched = json.load(f)
 
     def get_response(self):
@@ -58,12 +58,12 @@ class Manager:
         self.episodes_unwatched.extend(self.newly_added)
 
     def update_downloaded(self):
-        with open(resource_path("downloaded_episodes.txt"), "a") as f:
+        with open(resource_path("data/downloaded_episodes.txt"), "a") as f:
             for episode in self.newly_added:
                 f.write(f"{episode['title']}\n")
 
     def update_unwatched(self):
-        with open(resource_path("unwatched_episodes.json"), "w") as f:
+        with open(resource_path("data/unwatched_episodes.json"), "w") as f:
             json.dump(self.episodes_unwatched, f)
 
     def start_torrent(self, episode):
@@ -164,7 +164,7 @@ class Manager:
     def add_show(self, i):
         self.get_all_shows()
         self.shows_watching.append(self.all_shows[i])
-        with open(resource_path("shows_watching.json"), "w") as f:
+        with open(resource_path("data/shows_watching.json"), "w") as f:
             json.dump(self.shows_watching, f)
             console.print(f"Added {self.all_shows[i]}")
 
@@ -181,7 +181,7 @@ class Manager:
 
     def remove_show(self, i):
         removed_show = self.shows_watching.pop(i)
-        with open(resource_path("shows_watching.json"), "w") as f:
+        with open(resource_path("data/shows_watching.json"), "w") as f:
             json.dump(self.shows_watching, f)
             console.print(f"Removed {removed_show}")
 
