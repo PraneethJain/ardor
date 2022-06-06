@@ -51,7 +51,7 @@ class Manager:
         with open("downloaded_episodes.txt", "a") as f:
             for episode in self.newly_added:
                 f.write(f"{episode['title']}\n")
-                
+
     def update_unwatched(self):
         with open("unwatched_episodes.json", "w") as f:
             json.dump(self.episodes_unwatched, f)
@@ -60,7 +60,7 @@ class Manager:
         client = Client("http://127.0.0.1:8080/")
         client.login("admin", "adminadmin")
         client.download_from_link(
-            episode["link"], savepath=f"D:\Anime\{episode['show']}"
+            episode["link"], savepath=f"D:\Anime\{episode['show']}", category="anime"
         )
 
     def download_all(self):
@@ -87,7 +87,7 @@ class Manager:
                 episode["size"],
             )
         return table
-    
+
     def print_newly_added(self):
         if self.newly_added:
             console.print(self.create_table(self.newly_added))
@@ -105,15 +105,17 @@ class Manager:
     def play(self, i):
         episode_path = f"D:\Anime\{self.episodes_unwatched[i]['show']}\{self.episodes_unwatched[i]['title']}"
         os.system(f'mpv "{episode_path}"')
-        
+
     def watchlist(self):
         if self.episodes_unwatched:
             console.print(self.create_table(self.episodes_unwatched))
         else:
             console.print(f"All caught up!")
-            
+
     def complete(self, i):
-        console.print(f"Completed {self.episodes_unwatched[i]['show']} {self.episodes_unwatched[i]['ep']}")
+        console.print(
+            f"Completed {self.episodes_unwatched[i]['show']} {self.episodes_unwatched[i]['ep']}"
+        )
         self.episodes_unwatched.pop(i)
         self.update_unwatched()
 
