@@ -16,8 +16,10 @@ class Manager:
 
         with open("downloaded_episodes.txt") as f:
             self.episodes_downloaded = set(f.read().splitlines())
-        with open("shows_watching.txt") as f:
-            self.shows_watching = set(f.read().splitlines())
+        # with open("shows_watching.txt") as f:
+        #     self.shows_watching = set(f.read().splitlines())
+        with open("shows_watching.json", "r") as f:
+            self.shows_watching = json.load(f)
         with open("unwatched_episodes.json", "r") as f:
             self.episodes_unwatched = json.load(f)
 
@@ -143,17 +145,19 @@ class Manager:
         self.get_response()
         self.all_shows = [category.text for category in self.soup.find_all("category")]
         self.all_shows = list(dict.fromkeys(self.all_shows))
+
     def list_shows(self):
         self.get_all_shows()
         for i, show in enumerate(self.all_shows, start=1):
             console.print(
                 f"[#dc2f02]{i}[/#dc2f02]. [#f48c06]{show}[/#f48c06]", style="red"
             )
-            
+
     def add_show(self, i):
         self.get_all_shows()
-        with open('shows_watching.txt', 'a') as f:
-            f.write(f"{self.all_shows[i]}\n")
+        self.shows_watching.append(self.all_shows[i])
+        with open("shows_watching.json", "w") as f:
+            json.dump(self.shows_watching, f)
             console.print(f"Added {self.all_shows[i]}")
 
     def test(self):
