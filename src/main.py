@@ -10,18 +10,20 @@ if __name__ == '__main__':
         if arg=='play' or arg=='watch':
             manager.play(int(sys.argv[i+1])-1)
             break
+        if arg=='add':
+            manager.add_show(int(sys.argv[i+1])-1)
         if arg=='watchlist' or arg=='wl':
             manager.watchlist()
             break
         if arg=='complete' or arg=='cl':
             manager.complete(int(sys.argv[i+1])-1)
             break
-        if arg=='test':
-            manager.test()
-            break
         if arg=='progress':
             manager.show_progress()
             break
         if arg=='series':
             manager.list_shows()
+            break
+        if arg=='test':
+            manager.test()
             break

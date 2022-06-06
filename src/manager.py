@@ -140,17 +140,21 @@ class Manager:
         self.update_unwatched()
 
     def get_all_shows(self):
-        self.all_shows = set()
         self.get_response()
-        for category in self.soup.find_all("category"):
-            self.all_shows.add(category.text)
-
+        self.all_shows = [category.text for category in self.soup.find_all("category")]
+        self.all_shows = list(dict.fromkeys(self.all_shows))
     def list_shows(self):
         self.get_all_shows()
         for i, show in enumerate(self.all_shows, start=1):
             console.print(
                 f"[#dc2f02]{i}[/#dc2f02]. [#f48c06]{show}[/#f48c06]", style="red"
             )
+            
+    def add_show(self, i):
+        self.get_all_shows()
+        with open('shows_watching.txt', 'a') as f:
+            f.write(f"{self.all_shows[i]}\n")
+            console.print(f"Added {self.all_shows[i]}")
 
     def test(self):
         console.print(self.episodes_downloaded)
