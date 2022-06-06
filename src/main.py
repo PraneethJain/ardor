@@ -13,6 +13,9 @@ if __name__ == "__main__":
         if arg == "add":
             for arg in sys.argv[i + 1 :]:
                 manager.add_show(int(arg) - 1)
+        if arg == "remove":
+            for arg in sys.argv[i + 1 :]:
+                manager.remove_show(int(arg)-1)
         if arg == "watchlist" or arg == "wl":
             manager.watchlist()
             break
