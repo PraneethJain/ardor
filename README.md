@@ -8,7 +8,9 @@ __*ardor*__ is a simple command line application to download, manage and watch *
 ## Usage
 
 ### Adding/Removing Series
-
+* To view the list of currently airing series run ```ardor series all ```
+* To add any one of those series to your series run ```ardor add <number>```
+* To remove any series run ```ardor remove <number>```
 <img src="./media/series.gif">
 
 ### Downloading Episodes
