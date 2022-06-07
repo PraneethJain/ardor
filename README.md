@@ -12,12 +12,13 @@ __*ardor*__ is a simple command line application to download, manage and watch *
 4. Mark them as complete to remove them from your watchlist
 ### Adding/Removing Series
 * To view the list of currently airing series run ```ardor series all ```
-* To add any one of those series to your series run ```ardor add <number>```
+* To add any one of those series list to your series run ```ardor add <number>```
 * To remove any series run ```ardor remove <number>```
 <img src="./media/series.gif">
 
 ### Downloading Episodes
-
+* To download new episodes of series in your list run ```ardor download```
+* To view the progress of your downloads run ```ardor progress```
 ### Watching Episodes
 
 ## Installation
