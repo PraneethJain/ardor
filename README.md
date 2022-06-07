@@ -7,4 +7,4 @@
 
 
 # Credits
-<a href="https://www.flaticon.com/free-icons/japan" title="japan icons">Icon created by bqlqn - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/japan" title="japan icons">Japan icons created by bqlqn - Flaticon</a>
