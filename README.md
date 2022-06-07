@@ -3,7 +3,7 @@
 </p>
 
 # Ardor
-
+__*ardor*__ is a simple command line application to download, manage and watch **currently airing** anime.
 
 
 ## Credits
