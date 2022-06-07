@@ -23,8 +23,9 @@ __*ardor*__ is a simple command line application to download, manage and watch *
 
 ### Watching Episodes
 * To view unwatched episodes run ```ardor watchlist```
-* To watch an episode run ```ardor watch <number>```
+* To watch an episode run ```ardor watch <number>``` (This will launch mpv)
 * To complete an episode run ```ardor complete <number>```
+<img src="./media/watch.gif">
 ## Installation
 
 ### Requirements
