@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./images/banner.png" alt="Logo">
+  <img src="./media/banner.png" alt="Logo">
 </p>
 
 # Ardor
