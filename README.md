@@ -9,7 +9,8 @@ __*ardor*__ is a simple command line application to download, manage and watch *
 
 ### Adding/Removing Series
 
-[![asciicast](https://asciinema.org/a/3PRmO9ivUrQ22n0DVKtdBc7T6.svg)](https://asciinema.org/a/3PRmO9ivUrQ22n0DVKtdBc7T6)
+<img src="./media/series.gif">
+
 ### Downloading Episodes
 
 ### Watching Episodes
