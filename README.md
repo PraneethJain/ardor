@@ -6,7 +6,10 @@
 __*ardor*__ is a simple command line application to download, manage and watch **currently airing** anime.
 
 ## Usage
-
+1. Add the series you want to watch
+2. Download any new episodes of those series
+3. Watch them after they are done downloading
+4. Mark them as complete to remove them from your watchlist
 ### Adding/Removing Series
 * To view the list of currently airing series run ```ardor series all ```
 * To add any one of those series to your series run ```ardor add <number>```
