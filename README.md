@@ -20,7 +20,9 @@ __*ardor*__ is a simple command line application to download, manage and watch *
 * To download new episodes of series in your list run ```ardor download```
 * To view the progress of your downloads run ```ardor progress```
 ### Watching Episodes
-
+* To view unwatched episodes run ```ardor watchlist```
+* To watch an episode run ```ardor watch <number>```
+* To complete an episode run ```ardor complete <number>```
 ## Installation
 
 ### Requirements
