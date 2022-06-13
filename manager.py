@@ -77,7 +77,7 @@ class Manager:
         episode = self.episodes_unwatched[i]
         self.episodes_unwatched.pop(i)
         self.update_unwatched()
-        return f"Completed {episode['show']} {episode['ep']}"
+        return f"[green bold]Completed {episode['show']} {episode['ep']}[/green bold]"
 
     def add_show(self, show: str):
         self.load_shows_watching()
@@ -92,7 +92,7 @@ class Manager:
         removed_show = self.shows_watching.pop(i)
         with open(resource_path("data/shows_watching.json"), "w") as f:
             json.dump(self.shows_watching, f)
-            return f"Removed {removed_show}"
+            return f"[magenta]Removed [bold]{removed_show}[/bold][/magenta]"
 
     def watching_shows(self):
         table = Table(title="Shows Watching")
