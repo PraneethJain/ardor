@@ -126,6 +126,21 @@ def watchlist():
     manager = Manager()
     manager.load_unwatched_episodes()
     print(manager.watchlist())
+    
+@cli.command()
+def username(username: str):
+    downloader = Downloader()
+    downloader.set_username(username)
+    
+@cli.command()
+def password(password: str):
+    downloader = Downloader()
+    downloader.set_password(password)
+    
+@cli.command()
+def directory(base_directory: str):
+    downloader = Downloader()
+    downloader.set_base_directory(base_directory)
 
 
 if __name__ == "__main__":
