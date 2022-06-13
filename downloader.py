@@ -1,5 +1,7 @@
+from email.mime import base
 from qbittorrent import Client
-from manager import Manager
+from manager import Manager, resource_path
+import json
 
 
 class Downloader:
@@ -16,14 +18,27 @@ class Downloader:
         self.manager.load_episodes_downloaded()
         self.manager.load_unwatched_episodes()
 
+    def get_cred(self):
+        with open(resource_path("data/cred.json"), "r") as f:
+            return json.load(f)
+    
     def set_username(self, username: str):
-        self.username = username
+        cred = self.get_cred()
+        cred['username'] = username
+        with open(resource_path("data/cred.json"), "w") as f:
+            json.dump(cred, f)
 
     def set_password(self, password: str):
-        self.password = password
+        cred = self.get_cred()
+        cred['password'] = password
+        with open(resource_path("data/cred.json"), "w") as f:
+            json.dump(cred, f)
 
     def set_base_directory(self, base_directory: str):
-        self.base_directory = base_directory
+        cred = self.get_cred()
+        cred['base_directory'] = base_directory
+        with open(resource_path("data/cred.json"), "w") as f:
+            json.dump(cred, f)
 
     def start_torrent(self, episode):
         client = Client("http://127.0.0.1:8080/")
