@@ -23,7 +23,7 @@ __*ardor*__ is a simple command line application to download, manage and watch *
 
 ### Watching Episodes
 * To view unwatched episodes run ```ardor watchlist```
-* To watch an episode run ```ardor watch <number>``` (This will launch mpv)
+* To watch an episode run ```ardor watch <number>``` (This will launch your default media player)
 * To complete an episode run ```ardor complete <number>```
 <img src="./media/watch.gif">
 
@@ -31,7 +31,6 @@ __*ardor*__ is a simple command line application to download, manage and watch *
 WIP
 ### Requirements
 * qbittorrent
-* mpv
 
 ## Planned Features
 * Anilist Integration
