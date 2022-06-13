@@ -4,7 +4,6 @@ from manager import Manager
 
 
 class Scraper:
-    
     @staticmethod
     def get_response():
         response = requests.get("https://subsplease.org/rss/?r=1080")
