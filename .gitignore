@@ -1,7 +1,7 @@
 # File data
 *.json
 *.txt
-src/test.py
+test.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
