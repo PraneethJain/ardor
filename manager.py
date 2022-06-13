@@ -138,7 +138,7 @@ class Manager:
 
     def watchlist(self):
         if self.episodes_unwatched:
-            console.print(self.create_table(self.episodes_unwatched), "Watchlist")
+            console.print(self.create_table(self.episodes_unwatched, "[bold red]Watchlist[/bold red]"))
         else:
             console.print(f"All caught up!")
 
