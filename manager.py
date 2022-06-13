@@ -88,6 +88,12 @@ class Manager:
             json.dump(self.shows_watching, f)
             return f"[green bold]Added {show}[/green bold]"
 
+    def remove_show(self, i):
+        removed_show = self.shows_watching.pop(i)
+        with open(resource_path("data/shows_watching.json"), "w") as f:
+            json.dump(self.shows_watching, f)
+            return f"Removed {removed_show}"
+
     def watching_shows(self):
         table = Table(title="Shows Watching")
         table.add_column("S.No", justify="center", style="#ff0f7b")
@@ -98,9 +104,3 @@ class Manager:
             return table
         else:
             return "[bold red]You haven't added any shows![/bold red]"
-
-    def remove_show(self, i):
-        removed_show = self.shows_watching.pop(i)
-        with open(resource_path("data/shows_watching.json"), "w") as f:
-            json.dump(self.shows_watching, f)
-            return f"Removed {removed_show}"
