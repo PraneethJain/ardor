@@ -77,8 +77,8 @@ class Manager:
         for episode in self.newly_added:
             self.start_torrent(episode)
 
-    def create_table(self, L):
-        table = Table(title="Episodes Added")
+    def create_table(self, L, title):
+        table = Table(title=title)
         table.add_column("S.No", justify="center")
         table.add_column("Released", justify="center", style="#c200fb")
         table.add_column("Show", justify="center", style="#ec0868")
@@ -100,7 +100,7 @@ class Manager:
 
     def print_newly_added(self):
         if self.newly_added:
-            console.print(self.create_table(self.newly_added))
+            console.print(self.create_table(self.newly_added), "Added episodes!")
         else:
             console.print(f"No new episodes!")
 
@@ -138,7 +138,7 @@ class Manager:
 
     def watchlist(self):
         if self.episodes_unwatched:
-            console.print(self.create_table(self.episodes_unwatched))
+            console.print(self.create_table(self.episodes_unwatched), "Watchlist")
         else:
             console.print(f"All caught up!")
 
