@@ -15,10 +15,19 @@ class Downloader:
         self.manager = Manager()
         self.manager.load_episodes_downloaded()
         self.manager.load_unwatched_episodes()
+        
+    def set_username(self, username: str):
+        self.username = username
+        
+    def set_password(self, password: str):
+        self.password = password
+        
+    def set_base_directory(self, base_directory: str):
+        self.base_directory = base_directory
 
     def start_torrent(self, episode):
         client = Client("http://127.0.0.1:8080/")
-        client.login("admin", "adminadmin")
+        client.login(self.username, self.password)
         client.download_from_link(
             episode["link"],
             savepath=f"{self.base_directory}\{episode['show']}",
