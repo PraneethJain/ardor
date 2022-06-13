@@ -7,6 +7,14 @@ import json
 class Downloader:
     def __init__(self):
         self.cred = self.get_cred()
+        if "username" not in self.cred:
+            self.cred["username"] = input("Enter qbittorent username: ")
+        if "password" not in self.cred:
+            self.cred["password"] = input("Enter qbittorent password: ")
+        if "base_directory" not in self.cred:
+            self.cred["base_directory"] = input("Enter directory for downloads: ")
+        with open(resource_path("data/cred.json"), "w") as f:
+            json.dump(self.cred, f)
         self.base_directory = self.cred["base_directory"]
         self.username = self.cred["username"]
         self.password = self.cred["password"]
