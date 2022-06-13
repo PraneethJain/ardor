@@ -4,7 +4,9 @@ from manager import Manager
 
 
 class Scraper:
-    def get_response(self):
+    
+    @staticmethod
+    def get_response():
         response = requests.get("https://subsplease.org/rss/?r=1080")
         soup = BeautifulSoup(response.text, "lxml")
         return soup
