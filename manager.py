@@ -127,9 +127,9 @@ class Manager:
     def update(self):
         self.get_response()
         self.parse_response()
+        self.download_all()
         self.update_downloaded()
         self.update_unwatched()
-        self.download_all()
         self.print_newly_added()
 
     def play(self, i):
