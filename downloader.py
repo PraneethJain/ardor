@@ -5,15 +5,11 @@ import json
 
 
 class Downloader:
-    def __init__(
-        self,
-        base_directory: str = "D:\Anime",
-        username: str = "admin",
-        password: str = "adminadmin",
-    ):
-        self.base_directory = base_directory
-        self.username = username
-        self.password = password
+    def __init__(self):
+        self.cred = self.get_cred()
+        self.base_directory = self.cred["base_directory"]
+        self.username = self.cred["username"]
+        self.password = self.cred["password"]
         self.manager = Manager()
         self.manager.load_episodes_downloaded()
         self.manager.load_unwatched_episodes()
@@ -21,22 +17,22 @@ class Downloader:
     def get_cred(self):
         with open(resource_path("data/cred.json"), "r") as f:
             return json.load(f)
-    
+
     def set_username(self, username: str):
         cred = self.get_cred()
-        cred['username'] = username
+        cred["username"] = username
         with open(resource_path("data/cred.json"), "w") as f:
             json.dump(cred, f)
 
     def set_password(self, password: str):
         cred = self.get_cred()
-        cred['password'] = password
+        cred["password"] = password
         with open(resource_path("data/cred.json"), "w") as f:
             json.dump(cred, f)
 
     def set_base_directory(self, base_directory: str):
         cred = self.get_cred()
-        cred['base_directory'] = base_directory
+        cred["base_directory"] = base_directory
         with open(resource_path("data/cred.json"), "w") as f:
             json.dump(cred, f)
 
