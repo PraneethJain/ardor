@@ -6,6 +6,7 @@ from rich.console import Group
 from rich.live import Live
 from rich import print
 from msvcrt import getch
+import os
 
 cli = Typer()
 
@@ -58,10 +59,12 @@ def shows():
 def play():
     manager = Manager()
     manager.load_unwatched_episodes()
-    index, _ = selection_menu(
+    i, _ = selection_menu(
         list(map(lambda x: f"{x['show']} {x['ep']}", manager.episodes_unwatched))
     )
-    manager.play(index)
+    downloader = Downloader()
+    episode_path = f"{downloader.base_directory}\{manager.episodes_unwatched[i]['show']}\{manager.episodes_unwatched[i]['title']}"
+    os.system(f'"{episode_path}"')
 
 
 @cli.command()

@@ -61,10 +61,6 @@ class Manager:
             )
         return table
 
-    def play(self, i):
-        episode_path = f"D:\Anime\{self.episodes_unwatched[i]['show']}\{self.episodes_unwatched[i]['title']}"
-        os.system(f'"{episode_path}"')
-
     def watchlist(self):
         if self.episodes_unwatched:
             return self.create_table(
