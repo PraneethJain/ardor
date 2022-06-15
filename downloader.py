@@ -1,4 +1,3 @@
-from email.mime import base
 from qbittorrent import Client
 from manager import Manager, resource_path
 import json
