@@ -69,11 +69,13 @@ class Manager:
         else:
             return "[yellow bold]No unwatched episodes[/yellow bold]"
 
-    def complete(self, i):
-        episode = self.episodes_unwatched[i]
-        self.episodes_unwatched.pop(i)
-        self.update_unwatched()
-        return f"[green bold]Completed {episode['show']} {episode['ep']}[/green bold]"
+    def complete(self, indices):
+        output_text = ""
+        for i in sorted(indices, reverse=True):
+            episode = self.episodes_unwatched[i]
+            del self.episodes_unwatched[i]
+            self.update_unwatched()
+            yield f"[green bold]Completed {episode['show']} {episode['ep']}[/green bold]"
 
     def add_show(self, show: str):
         self.load_shows_watching()

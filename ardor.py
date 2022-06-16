@@ -144,12 +144,11 @@ def download():
     if newly_added := scraper.get_new_episodes():
         print("[bold green]Episodes available for download![/bold green]")
         if (
-            (a := selection_menu_mutiple(
+            a := selection_menu_mutiple(
                 list(map(lambda x: f"{x['show']} {x['ep']}", newly_added)),
                 transient=True,
-            ))
-            is not None
-        ):
+            )
+        ) is not None:
             selection_indices, _ = a
             downloader = Downloader()
             for index in selection_indices:
@@ -161,20 +160,17 @@ def download():
 
 
 @cli.command()
-def complete(all: bool = False):
+def complete():
     manager = Manager()
     manager.load_unwatched_episodes()
     if manager.episodes_unwatched:
-        i, selection = selection_menu(
-            list(map(lambda x: f"{x['show']} {x['ep']}", manager.episodes_unwatched))
-            + ["Complete all"],
+        selected_indices, _ = selection_menu_mutiple(
+            list(map(lambda x: f"{x['show']} {x['ep']}", manager.episodes_unwatched)),
             transient=True,
         )
-        if selection == "Complete all":
-            for _ in range(len(manager.episodes_unwatched)):
-                print(manager.complete(0))
-        else:
-            print(manager.complete(i))
+        j = 0
+        for output in manager.complete(selected_indices):
+            print(output)
     else:
         print("[yellow bold]No unwatched episodes[/yellow bold]")
 
