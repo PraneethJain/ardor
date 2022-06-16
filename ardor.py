@@ -134,8 +134,9 @@ def add(query: str):
 def remove(all: bool = False):
     manager = Manager()
     manager.load_shows_watching()
-    index, _ = selection_menu(manager.shows_watching)
-    print(manager.remove_show(index))
+    indices, _ = selection_menu_mutiple(manager.shows_watching)
+    for output in manager.remove_show(indices):
+        print(output)
 
 
 @cli.command()

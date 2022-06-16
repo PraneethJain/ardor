@@ -86,11 +86,13 @@ class Manager:
             json.dump(self.shows_watching, f)
             return f"[green bold]Added {show}[/green bold]"
 
-    def remove_show(self, i):
-        removed_show = self.shows_watching.pop(i)
+    def remove_show(self, indices):
+        for i in sorted(indices, reverse=True):
+            removed_show = self.shows_watching[i]
+            yield f"[magenta]Removed [bold]{removed_show}[/bold][/magenta]"
+            del self.shows_watching[i]
         with open(resource_path("data/shows_watching.json"), "w") as f:
             json.dump(self.shows_watching, f)
-            return f"[magenta]Removed [bold]{removed_show}[/bold][/magenta]"
 
     def watching_shows(self):
         table = Table(title="Shows Watching")
