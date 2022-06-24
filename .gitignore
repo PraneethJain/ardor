@@ -2,6 +2,8 @@
 *.json
 *.txt
 test.py
+ardor.iss
+PathMgr-1.0.3
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
