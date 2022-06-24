@@ -114,12 +114,15 @@ def shows():
 def play():
     manager = Manager()
     manager.load_unwatched_episodes()
-    i, _ = selection_menu(
-        list(map(lambda x: f"{x['show']} {x['ep']}", manager.episodes_unwatched))
-    )
-    downloader = Downloader()
-    episode_path = f"{downloader.base_directory}\{manager.episodes_unwatched[i]['show']}\{manager.episodes_unwatched[i]['title']}"
-    os.system(f'"{episode_path}"')
+    if not manager.episodes_unwatched:
+        print("[red bold]No episodes in watchlist[/red bold]")
+    else:
+        i, _ = selection_menu(
+            list(map(lambda x: f"{x['show']} {x['ep']}", manager.episodes_unwatched))
+        )
+        downloader = Downloader()
+        episode_path = f"{downloader.base_directory}\{manager.episodes_unwatched[i]['show']}\{manager.episodes_unwatched[i]['title']}"
+        os.system(f'"{episode_path}"')
 
 
 @cli.command()
