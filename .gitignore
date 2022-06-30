@@ -4,6 +4,7 @@
 test.py
 ardor.iss
 PathMgr-1.0.3
+Output
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
