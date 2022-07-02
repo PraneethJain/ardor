@@ -28,7 +28,9 @@ __*ardor*__ is a simple command line application to download, manage and watch *
 <img src="./media/watch.gif">
 
 ## Installation
-WIP
+(Windows)
+* Download the exe file from releases and run it
+* That's it
 ### Requirements
 * qbittorrent
 
